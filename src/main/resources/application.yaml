@@ -1,0 +1,29 @@
+jwt:
+  secret: "hqwedjkqwhdaslkdjasldhjuqwhberqweqbndazxcavncvbmcvbnjkfnvwuivbweqjhcvsdyuhcvqcuvqwidhkjvbsacjhvqbwcuhasvcjhawvbfcjhasvd"
+spring:
+ application:
+  name: Proyecto-3-ApiGateway
+ cloud:
+    gateway:
+        routes:
+        - id: auth-route
+          uri: http://localhost:8081
+          predicates:
+           - Path=/v1/auth/**
+        - id: game-route
+          uri: http://localhost:8080
+          predicates:
+           - Path=/v1/games/**
+          filters:
+           - AuthenticationFilter
+ endpoints:
+  web:
+   exposure:
+    include: "*"
+ endpoint:
+   health:
+    show-details: always
+   gateway:
+    enabled: true
+server:
+ port: 8082
